@@ -1,26 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 
-  namespace Program
+namespace Program
 {
     public class ParkingSector
     {
         public string SectorName { get; set; }
         public int Capacity { get; set; }
         public List<Vehicle> Vehicles { get; set; }
-        public decimal HourlyRate { get; set; }
+        public Dictionary<string, decimal> HourlyRatesByVehicleType { get; set; }
         public List<string> AllowedVehicleTypes { get; set; }
 
-
-
-        public ParkingSector(string sectorName, int capacity, decimal hourlyRate, List<string> allowedVehicleTypes)
+        public ParkingSector(string sectorName, int capacity, Dictionary<string, decimal> hourlyRates, List<string> allowedVehicleTypes)
         {
             SectorName = sectorName;
             Capacity = capacity;
-            HourlyRate = hourlyRate;
+            HourlyRatesByVehicleType = hourlyRates;
             Vehicles = new List<Vehicle>();
             AllowedVehicleTypes = allowedVehicleTypes;
         }
+        public decimal CalculateParkingFee(decimal hourlyRate, DateTime entryTime)
+        {
+            DateTime exitTime = DateTime.Now;
+            TimeSpan parkedTime = exitTime - entryTime;
+            decimal hoursParked = (decimal)parkedTime.TotalHours;
+            return hoursParked * hourlyRate;
+        }
+
 
         public bool IsFull()
         {
@@ -31,10 +37,10 @@ using System.Collections.Generic;
         {
             if (!IsFull())
             {
-                // Check if the allowed vehicle types include the current vehicle's type
                 if (AllowedVehicleTypes.Contains(vehicle.VehicleType))
                 {
                     vehicle.EntryTime = DateTime.Now;
+                    vehicle.ParkingFee = CalculateParkingFee(HourlyRatesByVehicleType[vehicle.VehicleType], vehicle.EntryTime);
                     Vehicles.Add(vehicle);
                     Console.WriteLine($"Vehicle parked in {SectorName} sector.");
                 }
@@ -49,7 +55,6 @@ using System.Collections.Generic;
             }
         }
 
-
         public void RemoveVehicle(string licensePlate)
         {
             Vehicle vehicle = Vehicles.Find(v => v.LicensePlate == licensePlate);
@@ -58,7 +63,7 @@ using System.Collections.Generic;
                 DateTime exitTime = DateTime.Now;
                 TimeSpan parkedTime = exitTime - vehicle.EntryTime;
                 decimal hoursParked = (decimal)parkedTime.TotalHours;
-                vehicle.ParkingFee = hoursParked * HourlyRate;
+                vehicle.ParkingFee = hoursParked * HourlyRatesByVehicleType[vehicle.VehicleType];
 
                 Vehicles.Remove(vehicle);
                 Console.WriteLine($"Vehicle removed from {SectorName} sector.");

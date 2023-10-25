@@ -1,8 +1,8 @@
-﻿    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
- namespace Program
+namespace Program
 {
     class Program
     {
@@ -34,20 +34,23 @@
                                     Console.Write("Enter Capacity: ");
                                     if (int.TryParse(Console.ReadLine(), out int capacity))
                                     {
-                                        Console.Write("Enter Hourly Rate: $");
-                                        if (decimal.TryParse(Console.ReadLine(), out decimal hourlyRate))
+                                        List<string> allowedVehicleTypes = GetAllowedVehicleTypes(VehicleTypes);
+                                        if (allowedVehicleTypes.Count == 0)
                                         {
-                                            List<string> allowedVehicleTypes = GetAllowedVehicleTypes(VehicleTypes);
+                                            Console.WriteLine("At least one allowed vehicle type is required.");
+                                            continue;
+                                        }
+                                        Dictionary<string, decimal> hourlyRates = GetHourlyRates(allowedVehicleTypes);
+                                        if (hourlyRates.Count == 0)
+                                        {
+                                            Console.WriteLine("At least one hourly rate is required.");
+                                            continue;
+                                        }
 
-                                            ParkingSector newSector = new ParkingSector(sectorName, capacity, hourlyRate, allowedVehicleTypes);
-                                            hospitalParking.AddParkingSector(newSector);
-                                            Console.WriteLine("Parking Sector added.");
-                                            break;
-                                        }
-                                        else
-                                        {
-                                            Console.WriteLine("Invalid hourly rate. Please enter a valid number.");
-                                        }
+                                        ParkingSector newSector = new ParkingSector(sectorName, capacity, hourlyRates, allowedVehicleTypes);
+                                        hospitalParking.AddParkingSector(newSector);
+                                        Console.WriteLine("Parking Sector added.");
+                                        break;
                                     }
                                     else
                                     {
@@ -178,6 +181,27 @@
                     Console.WriteLine("Invalid input. Please enter a valid option.");
                 }
             }
+        }
+
+        static Dictionary<string, decimal> GetHourlyRates(List<string> allowedVehicleTypes)
+        {
+            Dictionary<string, decimal> hourlyRates = new Dictionary<string, decimal>();
+            Console.WriteLine("Set Hourly Rates for Allowed Vehicle Types:");
+
+            foreach (var vehicleType in allowedVehicleTypes)
+            {
+                Console.Write($"Hourly rate for {vehicleType}: $");
+                if (decimal.TryParse(Console.ReadLine(), out decimal rate))
+                {
+                    hourlyRates[vehicleType] = rate;
+                }
+                else
+                {
+                    Console.WriteLine($"Invalid hourly rate for {vehicleType}. Please enter a valid number.");
+                }
+            }
+
+            return hourlyRates;
         }
 
         static List<string> GetAllowedVehicleTypes(List<string> vehicleTypes)
