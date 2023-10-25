@@ -1,0 +1,14 @@
+C:\Users\joaop\Ambiente de Trabalho\poo\TP_POO_a23553\TP_POO_a23553\bin\Debug\net7.0\TP_POO_a23553.exe
+C:\Users\joaop\Ambiente de Trabalho\poo\TP_POO_a23553\TP_POO_a23553\bin\Debug\net7.0\TP_POO_a23553.deps.json
+C:\Users\joaop\Ambiente de Trabalho\poo\TP_POO_a23553\TP_POO_a23553\bin\Debug\net7.0\TP_POO_a23553.runtimeconfig.json
+C:\Users\joaop\Ambiente de Trabalho\poo\TP_POO_a23553\TP_POO_a23553\bin\Debug\net7.0\TP_POO_a23553.dll
+C:\Users\joaop\Ambiente de Trabalho\poo\TP_POO_a23553\TP_POO_a23553\bin\Debug\net7.0\TP_POO_a23553.pdb
+C:\Users\joaop\Ambiente de Trabalho\poo\TP_POO_a23553\TP_POO_a23553\obj\Debug\net7.0\TP_POO_a23553.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\joaop\Ambiente de Trabalho\poo\TP_POO_a23553\TP_POO_a23553\obj\Debug\net7.0\TP_POO_a23553.AssemblyInfoInputs.cache
+C:\Users\joaop\Ambiente de Trabalho\poo\TP_POO_a23553\TP_POO_a23553\obj\Debug\net7.0\TP_POO_a23553.AssemblyInfo.cs
+C:\Users\joaop\Ambiente de Trabalho\poo\TP_POO_a23553\TP_POO_a23553\obj\Debug\net7.0\TP_POO_a23553.csproj.CoreCompileInputs.cache
+C:\Users\joaop\Ambiente de Trabalho\poo\TP_POO_a23553\TP_POO_a23553\obj\Debug\net7.0\TP_POO_a23553.dll
+C:\Users\joaop\Ambiente de Trabalho\poo\TP_POO_a23553\TP_POO_a23553\obj\Debug\net7.0\refint\TP_POO_a23553.dll
+C:\Users\joaop\Ambiente de Trabalho\poo\TP_POO_a23553\TP_POO_a23553\obj\Debug\net7.0\TP_POO_a23553.pdb
+C:\Users\joaop\Ambiente de Trabalho\poo\TP_POO_a23553\TP_POO_a23553\obj\Debug\net7.0\TP_POO_a23553.genruntimeconfig.cache
+C:\Users\joaop\Ambiente de Trabalho\poo\TP_POO_a23553\TP_POO_a23553\obj\Debug\net7.0\ref\TP_POO_a23553.dll
