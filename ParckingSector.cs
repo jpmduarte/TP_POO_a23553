@@ -11,6 +11,8 @@ namespace Program
         public Dictionary<string, decimal> HourlyRatesByVehicleType { get; set; }
         public List<string> AllowedVehicleTypes { get; set; }
 
+        public List<ParkingRecord> ParkingHistory { get; set; }
+
         public ParkingSector(string sectorName, int capacity, Dictionary<string, decimal> hourlyRates, List<string> allowedVehicleTypes)
         {
             SectorName = sectorName;
@@ -18,6 +20,7 @@ namespace Program
             HourlyRatesByVehicleType = hourlyRates;
             Vehicles = new List<Vehicle>();
             AllowedVehicleTypes = allowedVehicleTypes;
+            ParkingHistory = new List<ParkingRecord>();
         }
         public decimal CalculateParkingFee(decimal hourlyRate, DateTime entryTime)
         {
@@ -35,24 +38,23 @@ namespace Program
 
         public void ParkVehicle(Vehicle vehicle)
         {
-            if (!IsFull())
-            {
-                if (AllowedVehicleTypes.Contains(vehicle.VehicleType))
-                {
-                    vehicle.EntryTime = DateTime.Now;
-                    vehicle.ParkingFee = CalculateParkingFee(HourlyRatesByVehicleType[vehicle.VehicleType], vehicle.EntryTime);
-                    Vehicles.Add(vehicle);
-                    Console.WriteLine($"Vehicle parked in {SectorName} sector.");
-                }
-                else
-                {
-                    Console.WriteLine($"Sorry, {SectorName} sector does not allow {vehicle.VehicleType} vehicles.");
-                }
-            }
-            else
+            if (IsFull())
             {
                 Console.WriteLine($"Sorry, {SectorName} sector is full.");
+                return; // No need to continue if the sector is full
             }
+
+            if (!AllowedVehicleTypes.Contains(vehicle.VehicleType))
+            {
+                Console.WriteLine($"Sorry, {SectorName} sector does not allow {vehicle.VehicleType} vehicles.");
+                return; // No need to continue if the vehicle type is not allowed
+            }
+
+            vehicle.EntryTime = DateTime.Now;
+            vehicle.ParkingFee = CalculateParkingFee(HourlyRatesByVehicleType[vehicle.VehicleType], vehicle.EntryTime);
+            Vehicles.Add(vehicle);
+
+            Console.WriteLine($"Vehicle parked in {SectorName} sector.");
         }
 
         public void RemoveVehicle(string licensePlate)
@@ -65,6 +67,10 @@ namespace Program
                 decimal hoursParked = (decimal)parkedTime.TotalHours;
                 vehicle.ParkingFee = hoursParked * HourlyRatesByVehicleType[vehicle.VehicleType];
 
+                // Create a ParkingRecord before removing the vehicle
+                ParkingRecord parkingRecord = new ParkingRecord(vehicle, vehicle.EntryTime, exitTime, vehicle.ParkingFee);
+                ParkingHistory.Add(parkingRecord);
+
                 Vehicles.Remove(vehicle);
                 Console.WriteLine($"Vehicle removed from {SectorName} sector.");
                 Console.WriteLine($"Parking Fee: ${vehicle.ParkingFee:0.00}");
@@ -74,5 +80,6 @@ namespace Program
                 Console.WriteLine($"Vehicle not found in {SectorName} sector.");
             }
         }
+
     }
 }
